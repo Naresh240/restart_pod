@@ -1,7 +1,20 @@
-data "aws_cloudwatch_log_metric_filter" "metric_filters" {
-  for_each       = var.metric_filters
-  name           = each.value
-  log_group_name = each.key
+# data "aws_cloudwatch_log_metric_filter" "metric_filters" {
+#   for_each       = var.metric_filters
+#   name           = each.value
+#   log_group_name = each.key
+# }
+
+resource "aws_cloudwatch_log_metric_filter" "error_filters" {
+  for_each       = toset(var.log_groups)
+  name           = "ErrorFilter${replace(each.value, "/", "-")}"
+  log_group_name = each.value
+  pattern        = "ERROR"
+
+  metric_transformation {
+    name      = "ErrorCount-${replace(each.value, "/", "-")}"
+    namespace = "AppMonitoring"
+    value     = "1"
+  }
 }
 
 resource "aws_cloudwatch_metric_alarm" "app_error_alarms" {

@@ -16,13 +16,12 @@ module "cloudwatch_alarm" {
 
   log_groups      = var.log_groups
   metric_filters  = var.metric_filters
-  sns_topic_arn   = var.sns_topic_arn
+  sns_topic_arn   = module.sns.sns_topic_arn
 }
 
 module "sns" {
   source  = "./modules/sns"
 
-  sns_topic_name        = var.sns_topic_name
-  lambda_function_arn   = var.lambda_function_arn
-  lambda_function_name  = var.lambda_function_name
+  lambda_function_arn   = module.lambda.lambda_function_arn
+  lambda_function_name  = module.lambda.lambda_function_name
 }

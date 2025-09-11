@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "cloudwatch_alarm_topic" {
-  name = var.sns_topic_name
+  name = "trigger-k8s-lambda-topic"
 }
 
 resource "aws_lambda_permission" "sns_invoke_lambda" {
