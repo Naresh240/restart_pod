@@ -136,13 +136,11 @@ def prepare_email_content_for_error_logs(response, message, log_group_name):
     for event in events:
         log_stream_name = event['logStreamName']
         raw_message = event['message']
-
-        # Try JSON parse
         pod_name, namespace = "N/A", "N/A"
         try:
             msg = json.loads(raw_message)
-            pod_name = msg.get("kubernetes", {}).get("pod_name") or msg.get("pod") or "N/A"
-            namespace = msg.get("kubernetes", {}).get("namespace_name") or msg.get("namespace") or "N/A"
+            pod_name = msg.get("kubernetes", {}).get("containerName") or msg.get("containerName") or msg.get("pod") or "N/A"
+            namespace = msg.get("kubernetes", {}).get("containerNamespace") or msg.get("containerNamespace") or msg.get("namespace") or "N/A"
         except Exception:
             msg = raw_message
             pod_match = re.search(r'pod[=: ]+([\w-]+)', raw_message)
@@ -188,6 +186,7 @@ def process_metric_data_for_error_logs(message, response):
         filterPattern=filter_pattern
     )
 
+    print(f"response_file value: {response_fle}")
     if response_fle.get('events'):
         prepare_email_content_for_error_logs(response_fle, message, log_group_name)
         if message['AlarmName'] in approved_alarms_list:
@@ -283,6 +282,7 @@ def lambda_handler(event, context):
             metricName=metric_name,
             metricNamespace=metric_namespace
         )
+        print(f"response metric filters: {response['metricFilters']}")
         if response['metricFilters']:
             process_metric_data_for_error_logs(message, response)
         else:

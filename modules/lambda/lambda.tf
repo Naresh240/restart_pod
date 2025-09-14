@@ -21,7 +21,7 @@ resource "aws_lambda_function" "alarm_handler" {
       application_error_metric_namespace = var.application_error_metric_namespace
       env                                = var.env
       container_restart_approved_alarm_names = var.container_restart_approved_alarm_names
-      high_priority_prefix               = var.high_priority_prefix
+      high_priority_prefix               = "[HIGH]"
       secret_name                        = var.secret_name
     }
   }

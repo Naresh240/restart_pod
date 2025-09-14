@@ -7,16 +7,10 @@ application_error_metric_namespace = "AppMonitoring"
 env                         = "dev"
 
 container_restart_approved_alarm_names = "RestartAlarm1|RestartAlarm2"
-high_priority_prefix = "[HIGH]"
 
 secret_name = "my-ses-secret"
 
 log_groups = [
   "/aws/eks/fluentbit-logs",
+  "/aws/eks/fluentbit-logs1",
 ]
-
-metric_filters = {
-  "/app/log/group1" = "CustomFilter-group1"
-  "/app/log/group2" = "CustomFilter-group2"
-  "/app/log/group3" = "CustomFilter-group3"
-}

@@ -29,12 +29,6 @@ variable "container_restart_approved_alarm_names" {
   type        = string
 }
 
-variable "high_priority_prefix" {
-  description = "Prefix for high priority alarms"
-  type        = string
-  default     = "[HIGH]"
-}
-
 variable "secret_name" {
   description = "Secrets Manager secret name for SES credentials"
   type        = string
