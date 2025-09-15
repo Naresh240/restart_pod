@@ -24,11 +24,6 @@ variable "env" {
   type        = string
 }
 
-variable "container_restart_approved_alarm_names" {
-  description = "Pipe separated list of approved alarms for container restart"
-  type        = string
-}
-
 variable "secret_name" {
   description = "Secrets Manager secret name for SES credentials"
   type        = string

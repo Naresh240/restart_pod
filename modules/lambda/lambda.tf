@@ -15,14 +15,14 @@ resource "aws_lambda_function" "alarm_handler" {
 
   environment {
     variables = {
-      region                             = var.region
-      email_dist_list                    = var.email_dist_list
-      source_email                       = var.source_email
-      application_error_metric_namespace = var.application_error_metric_namespace
-      env                                = var.env
-      container_restart_approved_alarm_names = var.container_restart_approved_alarm_names
-      high_priority_prefix               = "[HIGH]"
-      secret_name                        = var.secret_name
+      region                                = var.region
+      email_dist_list                       = var.email_dist_list
+      source_email                          = var.source_email
+      application_error_metric_namespace    = var.application_error_metric_namespace
+      env                                   = var.env
+      container_restart_approved_alarm_names = "App-ErrorCount-All"
+      high_priority_prefix                  = "[HIGH]"
+      secret_name                           = var.secret_name
     }
   }
 }

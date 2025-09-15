@@ -5,8 +5,7 @@ module "lambda" {
   email_dist_list                       = var.email_dist_list
   source_email                          = var.source_email
   application_error_metric_namespace    = var.application_error_metric_namespace
-  env                                   = var.env   
-  container_restart_approved_alarm_names= var.container_restart_approved_alarm_names
+  env                                   = var.env
   secret_name                           = var.secret_name
 }
 

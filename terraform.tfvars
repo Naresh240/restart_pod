@@ -6,8 +6,6 @@ source_email = "alerts@example.com"
 application_error_metric_namespace = "AppMonitoring"
 env                         = "dev"
 
-container_restart_approved_alarm_names = "RestartAlarm1|RestartAlarm2"
-
 secret_name = "my-ses-secret"
 
 log_groups = [
