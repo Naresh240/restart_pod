@@ -19,6 +19,11 @@ variable "application_error_metric_namespace" {
   type        = string
 }
 
+variable "container_restart_approved_alarm_names" {
+  description = "Approved alarms list"
+  type        = string
+}
+
 variable "env" {
   description = "Deployment environment (dev, qa, prod)"
   type        = string

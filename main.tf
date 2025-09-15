@@ -1,10 +1,12 @@
 module "lambda" {
   source = "./modules/lambda"
 
+
   region                                = var.region
   email_dist_list                       = var.email_dist_list
   source_email                          = var.source_email
   application_error_metric_namespace    = var.application_error_metric_namespace
+  container_restart_approved_alarm_names= join("|", module.cloudwatch_alarm.alarm_names)
   env                                   = var.env
   secret_name                           = var.secret_name
 }

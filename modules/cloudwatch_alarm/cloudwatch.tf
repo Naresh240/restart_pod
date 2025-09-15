@@ -5,15 +5,16 @@ resource "aws_cloudwatch_log_metric_filter" "error_filters" {
   pattern        = "ERROR"
 
   metric_transformation {
-    name      = "ErrorCount"
+    name      = "ErrorCount${replace(each.value, "/", "-")}"
     namespace = "AppMonitoring"
     value     = "1"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "app_error_alarm" {
-  alarm_name          = "App-ErrorCount-All"
-  alarm_description   = "Application Error Count > 0 across all log groups"
+resource "aws_cloudwatch_metric_alarm" "app_error_alarms" {
+  for_each            = aws_cloudwatch_log_metric_filter.error_filters
+  alarm_name          = "ErrorCount${replace(each.key, "/", "-")}"
+  alarm_description   = "Application Error Count > 0 in log group ${each.key}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   threshold           = 1
@@ -21,7 +22,7 @@ resource "aws_cloudwatch_metric_alarm" "app_error_alarm" {
   alarm_actions       = [var.sns_topic_arn]
   ok_actions          = [var.sns_topic_arn]
 
-  metric_name = "ErrorCount"
+  metric_name = each.value.metric_transformation[0].name
   namespace   = "AppMonitoring"
   period      = 60
   statistic   = "Sum"
